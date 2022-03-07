@@ -1,0 +1,15 @@
+/**
+ * footer.js
+ * - footer layout
+ */
+
+const Footer = () => {
+    return (
+        <div>
+           <footer></footer> 
+        </div>
+    );
+}
+
+export default Footer;
+
