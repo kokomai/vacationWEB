@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 
 function App() {
   return (
-    <div>
+    <>
         <Header></Header>
         <Routes>
           <Route path="/" element={ <RequireAuth><Main/></RequireAuth> }></Route>
@@ -27,7 +27,7 @@ function App() {
           <Route path="*" element={ <Error404 />}></Route>
         </Routes>
         <Footer></Footer>
-    </div>
+    </>
   );
 }
 

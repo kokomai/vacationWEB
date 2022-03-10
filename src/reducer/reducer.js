@@ -5,12 +5,13 @@
 
 import { combineReducers } from "redux";
 import infoReducer from "./infoReducer";
-import { nowMonth, nowYear, holidayList } from "./calendarReducer";
+import { nowMonth, nowYear, holidayList, selectedDate } from "./calendarReducer";
 
 export default combineReducers({ 
-    info: infoReducer, 
-    nowMonth: nowMonth,
-    nowYear: nowYear,
-    holidayList: holidayList
+    info : infoReducer, 
+    nowMonth : nowMonth,
+    nowYear : nowYear,
+    holidayList : holidayList,
+    selectedDate : selectedDate
 });
 

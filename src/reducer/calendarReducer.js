@@ -32,4 +32,13 @@ const holidayList = (state = [], action) => {
     }
 }
 
-export { nowMonth, nowYear, holidayList };
+const selectedDate = (state = [], action) => {
+    switch(action.type) {
+        case "SET_SELECTED_DATE" :
+            return action.list
+        default :
+            return state
+    }
+}
+
+export { nowMonth, nowYear, holidayList, selectedDate };

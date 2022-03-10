@@ -22,13 +22,13 @@ const Login = () => {
         REQ.post({
             url : "/login/loginCheck",
             params : {
-                username : id,
+                id : id,
                 password : pw
             },
             success: function(res) {
                 REQ.setAToken(res.headers["x-auth-atoken"]);
                 REQ.setRToken(res.headers["x-auth-rtoken"]);
-                dispatch(addInfo(res.data.id));
+                dispatch(addInfo({id: res.data.id, nm: res.data.name}));
                 nav("/");
             },
             error: function(res) {

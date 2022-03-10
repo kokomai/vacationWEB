@@ -41,3 +41,15 @@ export const setHolidayList = (list) => {
         , list
     }
 }
+
+// 사용자가 선택한 날짜 셋팅
+// param : {
+//     stdt: String
+//     eddt: String
+// }
+export const setSelectedDate = (list) => {
+    return {
+        type: "SET_SELECTED_DATE"
+        , list
+    }
+}

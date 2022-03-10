@@ -8,7 +8,7 @@ import axios from "axios";
 const REQ = {
 	// loading 함수 정의
 	loading : function(boo) {
-		console.log("loading ::: " + boo);
+		//console.log("loading ::: " + boo);
 	},
     // refresh token 가져오기(sessionStorage)
     getRToken : function() {
