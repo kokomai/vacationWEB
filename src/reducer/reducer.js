@@ -4,14 +4,16 @@
  */
 
 import { combineReducers } from "redux";
-import infoReducer from "./infoReducer";
-import { nowMonth, nowYear, holidayList, selectedDate } from "./calendarReducer";
+import { __infoReducer, __vacaCntReducer } from "./infoReducer";
+import { __nowMonth, __nowYear, __holidayList, __selectedDate, __vacationList } from "./calendarReducer";
 
 export default combineReducers({ 
-    info : infoReducer, 
-    nowMonth : nowMonth,
-    nowYear : nowYear,
-    holidayList : holidayList,
-    selectedDate : selectedDate
+    info : __infoReducer,
+    vacaCnt : __vacaCntReducer,
+    nowMonth : __nowMonth,
+    vacationList : __vacationList,
+    nowYear : __nowYear,
+    holidayList : __holidayList,
+    selectedDate : __selectedDate
 });
 

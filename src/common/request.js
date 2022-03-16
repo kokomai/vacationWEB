@@ -95,38 +95,34 @@ const REQ = {
 			REQ.loading();
 		}
 		
-        try {
-            return new Promise((resolve, reject) => {
-				let config = {
-					headers : REQ.tokenHeader()
+		return new Promise((resolve, reject) => {
+			let config = {
+				headers : REQ.tokenHeader()
+			}
+
+			axios.get(url, params, config)
+			.then(function(res, stat, req) {
+				REQ.setAToken(req.getResponseHeader('X-AUTH-ATOKEN'));
+				successF(res, stat, req);
+				resolve(res, stat, req);
+
+				if(isHideLoading) {
+					REQ.loading(false);	
+				}
+			})
+			.catch(function(e) {
+				if(e.response && e.status === 401) {
+					window.location.href = "/401";
 				}
 
-				axios.get(url, params, config)
-				.then(function(res, stat, req) {
-					REQ.setAToken(req.getResponseHeader('X-AUTH-ATOKEN'));
-					successF(res, stat, req);
-					resolve(res, stat, req);
+				errorF(e);
+				reject(e);
 
-					if(isHideLoading) {
-						REQ.loading(false);	
-					}
-				})
-				.catch(function(e) {
-					if(e.response.status === 401) {
-						window.location.href = "/401";
-					}
-
-					errorF(e);
-					reject(e);
-
-					if(isHideLoading) {
-						REQ.loading(false);	
-					}
-				}); 
-            });
-        } catch(e) {
-            console.error(e);
-        }
+				if(isHideLoading) {
+					REQ.loading(false);	
+				}
+			}); 
+		});
     },
     // post axios
 	/*
@@ -177,39 +173,36 @@ const REQ = {
 		if(isLoading) {
 			REQ.loading();
 		}
-        try {
-            return new Promise((resolve, reject) => {
-                let config = {
-					headers : REQ.tokenHeader()
+
+		return new Promise((resolve, reject) => {
+			let config = {
+				headers : REQ.tokenHeader()
+			}
+
+			axios.post(url, params, config)
+			.then(function(res) {
+				
+				REQ.setAToken(res.headers["x-auth-atoken"]);
+				successF(res);
+				resolve(res);
+
+				if(isHideLoading) {
+					REQ.loading(false);	
+				}
+			})
+			.catch(function(e) {
+				if(e.response && e.response.status === 401) {
+					window.location.href = "/401";
 				}
 
-				axios.post(url, params, config)
-				.then(function(res) {
-					
-					REQ.setAToken(res.headers["x-auth-atoken"]);
-					successF(res);
-					resolve(res);
+				errorF(e);
+				reject(e);
 
-					if(isHideLoading) {
-						REQ.loading(false);	
-					}
-				})
-				.catch(function(e) {
-					if(e.response.status === 401) {
-						window.location.href = "/401";
-					}
-
-					errorF(e);
-					reject(e);
-
-					if(isHideLoading) {
-						REQ.loading(false);	
-					}
-				}); 
-            });
-        } catch(e) {
-            console.error(e);
-        }
+				if(isHideLoading) {
+					REQ.loading(false);	
+				}
+			}); 
+		});
     },
 }
 

@@ -2,13 +2,11 @@
  * login.js
  * - Login page
  */
-import axios from 'axios';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { addInfo } from '../actions/actions'
+import { ___addInfo } from '../actions/actions'
 import REQ from '../common/request';
 
 const Login = () => {
@@ -28,7 +26,13 @@ const Login = () => {
             success: function(res) {
                 REQ.setAToken(res.headers["x-auth-atoken"]);
                 REQ.setRToken(res.headers["x-auth-rtoken"]);
-                dispatch(addInfo({id: res.data.id, nm: res.data.name}));
+                dispatch(___addInfo(
+                    {   
+                        id: res.data.id, 
+                        name: res.data.name,
+                        department : res.data.department,
+                        auth : res.data.auth
+                    }));
                 nav("/");
             },
             error: function(res) {

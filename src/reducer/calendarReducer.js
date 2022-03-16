@@ -5,7 +5,7 @@
  */
 import moment from "moment"
 
-const nowMonth = (state = moment().format("MM"), action) => {
+const __nowMonth = (state = moment().format("MM"), action) => {
     switch(action.type) {
         case "SET_MONTH" :
             return action.month
@@ -14,7 +14,7 @@ const nowMonth = (state = moment().format("MM"), action) => {
     }
 }
 
-const nowYear = (state = moment().format("YYYY"), action) => {
+const __nowYear = (state = moment().format("YYYY"), action) => {
     switch(action.type) {
         case "SET_YEAR" :
             return action.year
@@ -23,7 +23,7 @@ const nowYear = (state = moment().format("YYYY"), action) => {
     }
 }
 
-const holidayList = (state = [], action) => {
+const __holidayList = (state = [], action) => {
     switch(action.type) {
         case "SET_HOLIDAY_LIST" :
             return action.list
@@ -32,7 +32,7 @@ const holidayList = (state = [], action) => {
     }
 }
 
-const selectedDate = (state = [], action) => {
+const __selectedDate = (state = [], action) => {
     switch(action.type) {
         case "SET_SELECTED_DATE" :
             return action.list
@@ -41,4 +41,13 @@ const selectedDate = (state = [], action) => {
     }
 }
 
-export { nowMonth, nowYear, holidayList, selectedDate };
+const __vacationList = (state = [], action) => {
+    switch(action.type) {
+        case "SET_VACATION_LIST" :
+            return action.list
+        default :
+            return state
+    }
+}
+
+export { __nowMonth, __nowYear, __holidayList, __selectedDate, __vacationList };

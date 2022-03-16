@@ -1,10 +1,10 @@
 
 /**
  * infoReducer.js
- * - 세션 정보 관련 reducer
+ * - 사용자 정보 관련 reducer
  */
 
-const infoReducer = (state = {}, action) => {
+const __infoReducer = (state = {}, action) => {
     switch(action.type) {
         case "ADD_INFO" :
             return action.info
@@ -15,4 +15,15 @@ const infoReducer = (state = {}, action) => {
     }
 }
 
-export default infoReducer;
+const __vacaCntReducer = (state = {}, action) => {
+    switch(action.type) {
+        case "SET_VACA_CNT" :
+            return action.obj
+        default :
+            return state
+    }
+}
+
+
+
+export { __infoReducer, __vacaCntReducer };

@@ -4,7 +4,7 @@
  */
 
 // 로그인 정보 셋팅
-export const addInfo = (info) => {
+export const ___addInfo = (info) => {
     return {
         type: "ADD_INFO"
         , info
@@ -12,14 +12,14 @@ export const addInfo = (info) => {
 }
 
 // 로그인 정보 지우기
-export const delInfo = (info) => {
+export const ___delInfo = (info) => {
     return {
         type: "DEL_INFO"
     }
 }
 
 // 현재 월 정보 셋팅
-export const setMonth = (month) => {
+export const ___setMonth = (month) => {
     return {
         type: "SET_MONTH"
         , month
@@ -27,7 +27,7 @@ export const setMonth = (month) => {
 }
 
 // 현재 연도 정보 셋팅
-export const setYear = (year) => {
+export const ___setYear = (year) => {
     return {
         type: "SET_YEAR"
         , year
@@ -35,7 +35,7 @@ export const setYear = (year) => {
 }
 
 // 휴일 리스트 셋팅
-export const setHolidayList = (list) => {
+export const ___setHolidayList = (list) => {
     return {
         type: "SET_HOLIDAY_LIST"
         , list
@@ -47,9 +47,30 @@ export const setHolidayList = (list) => {
 //     stdt: String
 //     eddt: String
 // }
-export const setSelectedDate = (list) => {
+export const ___setSelectedDate = (list) => {
     return {
         type: "SET_SELECTED_DATE"
+        , list
+    }
+}
+
+// 사용자의 남은 휴가, 전체 휴가 등 가져옴
+// param : {
+//     vacaTotCnt: String 전체 휴가
+//     vacaUsedCnt: String 쓴 휴가
+//     vacaExtraCnt: String 남은 휴가
+// }
+export const ___setVacaCnt = (obj) => {
+    return {
+        type: "SET_VACA_CNT"
+        , obj
+    }
+}
+
+// 휴가 리스트 셋팅
+export const ___setVacationList = (list) => {
+    return {
+        type: "SET_VACATION_LIST"
         , list
     }
 }

@@ -56,3 +56,8 @@ nav a::after {
 .content {
   margin:5%;
 }
+
+.cust-event-wrapper {
+    z-index: 10;
+    opacity: 10;
+}

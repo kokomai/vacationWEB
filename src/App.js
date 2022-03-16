@@ -3,15 +3,13 @@ import './bootstrap.min.css';
 import './bootstrap.min.css.map';
 import Header from './fragments/header';
 import Footer from './fragments/footer';
-import Main from './pages/main';
-import Detail from './pages/detail';
+import Main from './pages/main/main';
 import Login from './pages/login';
+import Approve from './pages/approve';
 import Error404 from './error/404';
 import Error401 from './error/401';
-import RequestVacation from './pages/request-vacation';
-import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector, connect } from 'react-redux';
-import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function App() {
   return (
@@ -19,11 +17,10 @@ function App() {
         <Header></Header>
         <Routes>
           <Route path="/" element={ <RequireAuth><Main/></RequireAuth> }></Route>
+          <Route path="/approve" element={ <RequireAuth><Approve/></RequireAuth> }></Route>
           <Route path="/404" element={ <Error404 />}></Route>
           <Route path="/401" element={ <Error401 />}></Route>
           <Route path="/login" element={ <Login />}></Route>
-          <Route path="/request" element={ <RequireAuth></RequireAuth> }></Route>
-          <Route path="/detail" element={ <Detail/> }></Route>
           <Route path="*" element={ <Error404 />}></Route>
         </Routes>
         <Footer></Footer>
