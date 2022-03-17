@@ -236,10 +236,6 @@ const Main = () => {
         })
     },[nowMonth, nowYear, dispatch, user.id]);
 
-    useEffect(() => {
-        // console.log(vacationList);
-    }, [vacationList])
-
     const onDateClick= (e) => {
         let val = e.target.getAttribute("id");
         if(document.getElementById(val + "d").style['color'] === "red"
@@ -323,7 +319,6 @@ const Main = () => {
                 date: e.target.getAttribute("date")
             },
             success: function(res) {
-                console.log(res);
                 let obj = {};
                 if(res.data.APPRV1) {
                     obj["apprv1"] = res.data.APPRV1
@@ -355,7 +350,7 @@ const Main = () => {
         <>  
             <div className='row'>
                 <div className='col-7'>
-                    <h5 style={{color: "#b95cff"}}>{ user.name + "님"}</h5>
+                    <h5 style={{color: "#007bff" }}>{ user.name + "님"}</h5>
                     <span>전체 휴가일 : { vacaCntShow.totCnt }</span><br/>
                     <span>사용 휴가일 : { vacaCntShow.usedCnt + "(+" + useCount + ")" }</span><br/>
                     <span>남은 휴가일 : { vacaCntShow.extraCnt + "(-" + useCount + ")" }</span><br/>

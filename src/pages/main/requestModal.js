@@ -37,14 +37,8 @@ const RequestModal = ({showModal, setShowModal, vacaCntShow, useCount}) => {
         }
     }
 
-    str += "\n휴가를 신청하겠습니까?";
-    
-    if(isBefore) {
-        str = "※ 현재보다 이전일이 포함되어 있습니다. \n\n" + str;
-    }
-
-    useEffect(()=> {
-        REQ.post({
+    useEffect(async ()=> {
+        await REQ.post({
             url: "/vacation/getApprovers",
             params: {
                 department: user.department,
@@ -52,34 +46,38 @@ const RequestModal = ({showModal, setShowModal, vacaCntShow, useCount}) => {
             },
             success: function(res) {
                 setAuthList(res.data);
-                let auth1 = localStorage.getItem("auth1");
-                let auth2 = localStorage.getItem("auth2");
-                if(auth1) {
-                    approvers["auth1"] = auth1;
-                }
-                if(auth2) {
-                    approvers["auth2"] = auth2;
-                }
             }
         })
     }, [user, setAuthList, approvers])
+
+    useEffect(()=> {
+        let auth1 = localStorage.getItem("auth1");
+        let auth2 = localStorage.getItem("auth2");
+        if(auth1) {
+            approvers["auth1"] = auth1;
+        }
+        if(auth2) {
+            approvers["auth2"] = auth2;
+        }
+    }, []);
 
     const close = () => {
         setShowModal(false);
     }
 
     const request = () => {
-        if(authList.auth1 && !approvers.auth1) {
-            alert("1차 결재자를 선택해 주세요.");
+        let confirmText = str + "\n휴가를 신청하겠습니까?";
+    
+        if(isBefore) {
+            confirmText = "※ 현재보다 이전일이 포함되어 있습니다. \n\n" + confirmText;
+        }
+
+        if((authList.auth1 && !approvers.auth1) && (authList.auth2 && !approvers.auth2)) {
+            alert("결재자를 선택해 주세요.");
             return;
         }
 
-        if(authList.auth2 && !approvers.auth2) {
-            alert("2차 결재자를 선택해 주세요.");
-            return;
-        }
-
-        if(window.confirm(str)) {
+        if(window.confirm(confirmText)) {
             localStorage.setItem("auth1", approvers.auth1);
             if(approvers.auth2) {
                 localStorage.setItem("auth2", approvers.auth2);
@@ -106,7 +104,7 @@ const RequestModal = ({showModal, setShowModal, vacaCntShow, useCount}) => {
             <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">세부사항 입력</h5>
+                        <h5 className="modal-title">결재자 지정</h5>
                         <a href="#!" type="button" className="btn-close" onClick={close} aria-label="Close">Χ</a>
                     </div>
                     <div className="modal-body">
@@ -116,7 +114,12 @@ const RequestModal = ({showModal, setShowModal, vacaCntShow, useCount}) => {
                             <small>남은 휴가일 : { vacaCntShow.extraCnt + "(-" + useCount + ")" }</small><br/>
                             <br/>
                             <small>선택날짜</small><br/>
-                            <small dangerouslySetInnerHTML={{__html : str.replace(/\n/gi, "<br/>")}}></small>
+                            <small 
+                                style={{
+                                    color: "#007bff" 
+                                }}
+                                dangerouslySetInnerHTML={{__html : str.replace(/\n/gi, "<br/>")}}
+                            ></small>
                             
                         </div>
                         <hr></hr>
