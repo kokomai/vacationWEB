@@ -94,9 +94,14 @@ function EventWrapper(event) {
             break;
     }
 
-    if(event.state === "승인" || event.state === "3차 승인") {
-        stateColor = "rgb(0 157 63)";
+    if(event.state) {
+        if(event.state === "승인" || event.state === "3차 승인") {
+            stateColor = "rgb(0 157 63)";
+        } else if(event.state.includes("반려") || event.state.includes("부결")) {
+            stateColor = "rgb(239 14 14)";
+        }
     }
+    
 
     if(event.div === "02") {
         bgColor = "rgba(228, 255, 0, 0.16)";
@@ -119,7 +124,7 @@ function EventWrapper(event) {
             style={{
                 fontSize : 'xx-small', 
                 color: "#545454",
-                margin:"6px",
+                margin:"1px",
                 fontWeight: "bold",
             }}>{title ? title : ''}
                 <small 
@@ -130,7 +135,7 @@ function EventWrapper(event) {
                         width: "5%",
                         marginBottom: "7px",
                         marginTop: "5px",
-                        marginLeft: "10px",
+                        marginLeft: "5px",
                     }}
                 >⬤</small>  
             </p>
@@ -156,14 +161,9 @@ const Main = () => {
     const [vacaDiv, setVacaDiv] = useState("01");
     const [showModal, setShowModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
-    const [infoModalParams, setInfoModalParams] = useState({
-        apprv1: "",
-        apprv2: "",
-        date: "",
-        email: "",
-        state: "",
-        isBefore: false
-    });
+    const [infoModalParams, setInfoModalParams] = useState({});
+    
+    const [isChanged, setIsChanged] = useState(false);
 
     let list = [...selectedDate];
 
@@ -185,7 +185,7 @@ const Main = () => {
                 dispatch(___setVacaCnt(obj));
             }
         });
-    }, [user, dispatch])
+    }, [user, dispatch, isChanged])
 
     useEffect(() => {
         let innerUseCount = 0;
@@ -204,7 +204,7 @@ const Main = () => {
         obj.extraCnt = obj.extraCnt - innerUseCount;
         setVcaCntShow(obj);
         setUseCount(innerUseCount);
-    }, [selectedDate, vacaCnt, setVcaCntShow])
+    }, [selectedDate, vacaCnt, setVcaCntShow, isChanged])
     
     useEffect(() => {
         REQ.post({
@@ -234,7 +234,7 @@ const Main = () => {
                 dispatch(___setVacationList(list));
             }
         })
-    },[nowMonth, nowYear, dispatch, user.id]);
+    },[nowMonth, nowYear, dispatch, user.id, isChanged]);
 
     const onDateClick= (e) => {
         let val = e.target.getAttribute("id");
@@ -329,9 +329,14 @@ const Main = () => {
                 } else {
                     obj["apprv1"] = res.data.APPRV3
                 }
+                obj["vacaSeq"] = res.data.VACA_SEQ
                 obj["date"] = res.data.VACA_DATE + "(" + res.data.VACA_DIV + ")";
                 obj["email"] = res.data.VACA_EMAIL_SEND_STATE;
                 obj["state"] = res.data.VACA_STATE;
+                obj["reason"] = res.data.VACA_REASON;
+                obj["handoverText"] = res.data.VACA_INSU_UPMU;
+                obj["handoverPerson"] = res.data.VACA_INSU;
+                obj["rejectReason"] = res.data.VACA_REJECT_REASON;
 
                 if(moment().format("YYYYMMDD") > res.data.VACA_DATE 
                 && (res.data.VACA_STATE === "승인" || res.data.VACA_STATE === "3차 승인")) {
@@ -347,7 +352,7 @@ const Main = () => {
     }
 
     return (
-        <>  
+        <div className='content'>  
             <div className='row'>
                 <div className='col-7'>
                     <h5 style={{color: "#007bff" }}>{ user.name + "님"}</h5>
@@ -422,9 +427,9 @@ const Main = () => {
                 >
                 </Calendar>
             </div>
-            <RequestModal useCount={useCount} showModal={showModal} setShowModal={setShowModal} vacaCntShow={vacaCntShow}></RequestModal>
-            <VacationInfoModal params={infoModalParams} showInfoModal={showInfoModal} setShowInfoModal={setShowInfoModal}></VacationInfoModal>
-        </>
+            <RequestModal useCount={useCount} showModal={showModal} setShowModal={setShowModal }  vacaCntShow={vacaCntShow} isChanged={isChanged} setIsChanged={setIsChanged}></RequestModal>
+            <VacationInfoModal params={infoModalParams} showInfoModal={showInfoModal} setShowInfoModal={setShowInfoModal} isChanged={isChanged} setIsChanged={setIsChanged}></VacationInfoModal>
+        </div>
     )
 }
 

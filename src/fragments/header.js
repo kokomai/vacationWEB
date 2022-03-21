@@ -3,31 +3,31 @@
  * - header layout
  */
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ___addInfo } from "../actions/actions";
 
 
 const Header = () => {
     const nav = useNavigate();
     const user = useSelector(state => (state.info));
-
+    const dispatch = useDispatch();
 
     return (
         <div>
             <header>
                 <h1>Foresys 휴가 관리</h1>
-                <div className="row ml-2 mr-2">
-                    <div className="col-">
+                <div className="d-flex" style={{height: "30%"}}>
+                    <div className="p-2">
                         <nav>
                             <a href="#!" onClick={()=> {
                                 nav("/")
-                            }}>메인</a>
+                            }}>휴가신청</a>
                         </nav>
                     </div>
-                    
                     {
-                        user.auth !== "C04" 
-                        ? <div className="col-">
+                        user.auth && user.auth !== "C04" 
+                        ? <div className="p-2">
                             <nav>
                                 <a href="#!" onClick={()=> {
                                     nav("/approve")
@@ -36,7 +36,23 @@ const Header = () => {
                         </div>
                         : <></>
                     }
+                    {
+                    user.auth
+                        ? 
+                            <div className="ml-auto p-2">
+                                <nav className="">
+                                    <button className="btn-secondary btn-sm" 
+                                    onClick={()=> {
+                                        dispatch(___addInfo({}));
+                                        nav("/")
+                                    }}>로그아웃</button>
+                                </nav>
+                            </div>
+                        
+                        : <></>
+                    }
                 </div>
+                
             </header>
         </div>
     );

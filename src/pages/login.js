@@ -43,46 +43,39 @@ const Login = () => {
         });
     }
 
-    const authTest = () => {
-        REQ.post({
-            url: "/holidayApi/getHoliday",
-            params: {
-                month: "03",
-                year: "2022"
-            },
-            success: function(res) {
-                console.log(res);
-            }
-        });
-    }
     return (
-        <div className="content container">
+        <div className="content mt-5">
             <div>
                 <h3>로그인</h3>
-                <div className="justify-content-center">
-                    ID:<input type="text" className="row" onInput={(e) => {
-                        setId(e.target.value);
-                    }} onKeyDown={(e) => {
-                        if(e.code === "Enter") {
-                            login();
-                        }
-                    }}></input>
-                    PW:<input type="password" className="row" onInput={(e) => {
-                        setPw(e.target.value);   
-                    }} onKeyDown={(e) => {
-                        if(e.code === "Enter") {
-                            login();
-                        }
-                    }}></input>
-                    
-                    <Button variant="primary" className="row" onClick={()=>{
-                        login();
-                    }}>로그인</Button>
-                    <div>
-                        <Button variant="danger" className="row" onClick={()=>{
-                            authTest();
-                        }}>권한 테스트</Button>
+                <div className="row m-3">
+                    <div className='col-'>
+                        ID:<br></br><input type="text" onInput={(e) => {
+                            setId(e.target.value);
+                        }} onKeyDown={(e) => {
+                            if(e.code === "Enter") {
+                                login();
+                            }
+                        }}></input><br></br>
+                        PW:<br></br><input type="password" onInput={(e) => {
+                            setPw(e.target.value);   
+                        }} onKeyDown={(e) => {
+                            if(e.code === "Enter") {
+                                login();
+                            }
+                        }}></input>
                     </div>
+                    <div className='col- mt-3 ml-2'>
+                        <Button variant="primary" 
+                        style={{
+                            width: "100%",
+                            height: "100%"
+                        }}
+                        onClick={()=>{
+                            login();
+                        }}>로그인</Button>
+                    </div>
+                    
+                    
                 </div>
             </div>
         </div>
