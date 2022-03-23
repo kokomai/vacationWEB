@@ -5,7 +5,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ___addInfo } from "../actions/actions";
+import { ___addInfo, ___setSelectedDate } from "../actions/actions";
 
 
 const Header = () => {
@@ -17,6 +17,9 @@ const Header = () => {
         <div>
             <header>
                 <h1>Foresys 휴가 관리</h1>
+        {
+            user.auth
+            ? 
                 <div className="d-flex" style={{height: "30%"}}>
                     <div className="p-2">
                         <nav>
@@ -36,24 +39,22 @@ const Header = () => {
                         </div>
                         : <></>
                     }
-                    {
-                    user.auth
-                        ? 
+                    
                             <div className="ml-auto p-2">
                                 <nav className="">
                                     <button className="btn-secondary btn-sm" 
                                     onClick={()=> {
                                         dispatch(___addInfo({}));
+                                        dispatch(___setSelectedDate([]));
                                         nav("/")
                                     }}>로그아웃</button>
                                 </nav>
                             </div>
                         
-                        : <></>
-                    }
                 </div>
-                
-            </header>
+            : <></>
+        }
+        </header>
         </div>
     );
 }

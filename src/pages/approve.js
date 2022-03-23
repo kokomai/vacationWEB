@@ -10,11 +10,13 @@ import REQ from "../common/request";
 const Approve = () => {
     const user = useSelector((state)=>(state.info));
     const [requestList, setRequestList] = useState([]);
-    const [rejectSeq, setRejectSeq] = useState("");
+    const [seq, setSeq] = useState("");
+    const [requesterId, setRequesterId] = useState("");
     const [rejectRequester, setRejectRequester] = useState("");
     const [rejectDate, setRejectDate] = useState("");
     const [rejectReason, setRejectReason] = useState("");
     const [showRejectModal, setShowRejectModal] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
 
     useEffect(() => {
@@ -28,7 +30,7 @@ const Approve = () => {
                 setRequestList(res.data);
             }
         })
-    }, [user, showRejectModal]);
+    }, [user, showRejectModal, refresh]);
 
     useEffect(()=> {
     }, [requestList]);
@@ -38,11 +40,10 @@ const Approve = () => {
             REQ.post({
                 url: '/vacation/rejectVacation',
                 params: {
-                    vacaSeq : rejectSeq,
+                    vacaSeq : seq,
                     reason : rejectReason
                 },
                 success: function(res) {
-                    console.log(res);
                     if(res.data === 0) {
                         alert("휴가 반려에 실패했습니다.");
                     } else {
@@ -54,11 +55,33 @@ const Approve = () => {
         }
     }
 
+    const approve = () => {
+        if(window.confirm("정말 휴가를 승인하시겠습니까?")) {
+            REQ.post({
+                url: '/vacation/approveVacation',
+                params: {
+                    vacaSeq : seq,
+                    id: user.id,
+                    requesterId : requesterId
+                },
+                success: function(res) {
+                    console.log(res);
+                    if(res.data === 0) {
+                        alert("휴가 승인에 실패했습니다.");
+                    } else {
+                        alert("휴가 승인 성공!");
+                        setRefresh(!refresh);
+                    }
+                }
+            })
+        }
+    }
+
     const close = () => {
         setRejectDate("");
         setRejectReason("");
         setRejectRequester("");
-        setRejectSeq("");
+        setSeq("");
         setShowRejectModal(false);
     }
 
@@ -96,12 +119,16 @@ const Approve = () => {
                         </p>
                         <div className="modal-footer"> 
                             <button type="button" className="btn btn-danger" onClick={(e)=> {
-                                setRejectSeq(item.VACA_SEQ);
+                                setSeq(item.VACA_SEQ);
                                 setRejectRequester(item.REQUESTER);
                                 setRejectDate(item.VACA_DATES);
                                 setShowRejectModal(true);
                             }} >반려</button>
-                            <button type="button" className="btn btn-primary" >승인</button>
+                            <button type="button" className="btn btn-primary" onClick={(e)=> {
+                                setSeq(item.VACA_SEQ);
+                                setRequesterId(item.REQUESTER_ID);
+                                approve();
+                            }}>승인</button>
                         </div>
                     </div>
                 </div>

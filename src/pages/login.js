@@ -44,19 +44,19 @@ const Login = () => {
     }
 
     return (
-        <div className="content mt-5">
-            <div>
-                <h3>로그인</h3>
-                <div className="row m-3">
+        <div className="content d-flex h-75">
+            <div className="w-100 align-self-center border border-primary rounded">
+                <h3 className='d-flex justify-content-center'>로그인</h3>
+                <div className="row m-3 d-flex justify-content-center">
                     <div className='col-'>
-                        ID:<br></br><input type="text" onInput={(e) => {
+                        아이디:<br></br><input type="text" onInput={(e) => {
                             setId(e.target.value);
                         }} onKeyDown={(e) => {
                             if(e.code === "Enter") {
                                 login();
                             }
                         }}></input><br></br>
-                        PW:<br></br><input type="password" onInput={(e) => {
+                        비밀번호:<br></br><input type="password" onInput={(e) => {
                             setPw(e.target.value);   
                         }} onKeyDown={(e) => {
                             if(e.code === "Enter") {

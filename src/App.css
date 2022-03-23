@@ -9,6 +9,11 @@ body {
     font: normal 18px 'Open Sans', sans-serif;
     background: #fafafa;
     color: #333;
+    height: 100vh;
+}
+
+#root {
+    height: 100vh;
 }
 
 main {
