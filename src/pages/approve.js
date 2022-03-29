@@ -125,6 +125,7 @@ const Approve = () => {
                                 setShowRejectModal(true);
                             }} >반려</button>
                             <button type="button" className="btn btn-primary" onClick={(e)=> {
+                                console.log(item);
                                 setSeq(item.VACA_SEQ);
                                 setRequesterId(item.REQUESTER_ID);
                                 approve();
