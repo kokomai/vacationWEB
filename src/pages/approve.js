@@ -11,7 +11,6 @@ const Approve = () => {
     const user = useSelector((state)=>(state.info));
     const [requestList, setRequestList] = useState([]);
     const [seq, setSeq] = useState("");
-    const [requesterId, setRequesterId] = useState("");
     const [rejectRequester, setRejectRequester] = useState("");
     const [rejectDate, setRejectDate] = useState("");
     const [rejectReason, setRejectReason] = useState("");
@@ -55,7 +54,7 @@ const Approve = () => {
         }
     }
 
-    const approve = () => {
+    const approve = (seq, requesterId) => {
         if(window.confirm("정말 휴가를 승인하시겠습니까?")) {
             REQ.post({
                 url: '/vacation/approveVacation',
@@ -126,9 +125,7 @@ const Approve = () => {
                             }} >반려</button>
                             <button type="button" className="btn btn-primary" onClick={(e)=> {
                                 console.log(item);
-                                setSeq(item.VACA_SEQ);
-                                setRequesterId(item.REQUESTER_ID);
-                                approve();
+                                approve(item.VACA_SEQ, item.REQUESTER_ID);
                             }}>승인</button>
                         </div>
                     </div>

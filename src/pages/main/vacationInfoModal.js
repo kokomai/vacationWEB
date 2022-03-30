@@ -5,9 +5,11 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'moment/locale/ko';
 import REQ from '../../common/request';
+import { useSelector } from 'react-redux';
 
 
 const VacationInfoModal = ({ params,  showInfoModal, setShowInfoModal, isChanged, setIsChanged }) => {
+    const user = useSelector(state => (state.info));
     const close = () => {
         setIsChanged(!isChanged);
         setShowInfoModal(false);
@@ -18,7 +20,8 @@ const VacationInfoModal = ({ params,  showInfoModal, setShowInfoModal, isChanged
             REQ.post({
                 url: '/vacation/cancelVacation',
                 params: {
-                    vacaSeq: params.vacaSeq
+                    vacaSeq: params.vacaSeq,
+                    id: user.id
                 },
                 success: function(res) {
                     if(res.data === 0) {
